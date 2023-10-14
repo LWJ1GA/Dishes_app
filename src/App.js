@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { Categories } from './components/categories';
+// import Caracteristics from './components/Caracteristics';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Selection } from './components/Selection';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <h1> B / S / H Select Dish Variants</h1>
+        </header>
+
+        <Categories />
+
+        {/* <Caracteristics></Caracteristics> */}
+        <Routes>
+          <Route path="/categories" component={<Categories />} />
+          {/* <Route path="/caracteristics" component={<Caracteristics />} /> */}
+          <Route path="/selection" component={<Selection />} />
+        </Routes> 
+      </div>
+    </Router>
   );
 }
 
