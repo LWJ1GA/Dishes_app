@@ -1,8 +1,9 @@
 
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Categories } from './components/categories';
-// import Caracteristics from './components/Caracteristics';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Caracteristics } from './components/Caracteristics';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Selection } from './components/Selection';
 
 
@@ -14,14 +15,17 @@ function App() {
           <h1> B / S / H Select Dish Variants</h1>
         </header>
 
-        <Categories />
 
         {/* <Caracteristics></Caracteristics> */}
-        <Routes>
-          <Route path="/categories" component={<Categories />} />
-          {/* <Route path="/caracteristics" component={<Caracteristics />} /> */}
-          <Route path="/selection" component={<Selection />} />
-        </Routes> 
+        <Switch>
+          <Route exact path="/">
+            <Categories />
+           {/* <Caracteristics/>*/}
+          </Route>
+          <Route exact path="/selection">
+            <Selection/>
+          </Route>
+        </Switch> 
       </div>
     </Router>
   );

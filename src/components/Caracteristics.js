@@ -1,23 +1,21 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import './Caracteristics.css';
+import { Link } from 'react-router-dom';
 
-function Caracteristics() {
-  const history = useHistory();
-
-  const navigateToComponentB = () => {
-    history.push('/selection');
-  };
+export const Caracteristics =()=> {
 
   return (
-    <div>
-      <h1>Caracteristics</h1>
+    <div className="container">
       <div className='box'> Number of variants - 50 </div><br></br>
         <div className='box'> Dish Properties</div>
+        <div className='buttons'>
         <button className="opc"> Download </button>
-      <button onClick={navigateToComponentB}>Selection</button>
+        <Link to='/selection'><button className="opc">Selection</button></Link>
+        </div>
+
     </div>
   );
 }
 
-export default Caracteristics;
+
 

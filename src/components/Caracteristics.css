@@ -1,4 +1,11 @@
-.box{
+.container{
+    display: contents;
+    justify-content: center; /* Centrar horizontalmente en la pantalla */
+    align-items: center; /* Centrar verticalmente en la pantalla */
+    height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+    margin: 0;
+}
+.box {
     width: 300px; 
     height: 25px; 
     border: 1px solid #ccc; 
@@ -13,12 +20,16 @@
     color:white;
     width: 500 px; 
     height: 50px; 
-    justify-content: center;
-    align-items: center;
-    margin-top: 5%;
-
+    align-items: center; /* Centrar el contenido verticalmente */
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    margin-top: 10%;
+    margin: 0 0px; /* Espacio entre los botones */
 }
 
 .opc:hover{
-    background-color: aquamarine;
+    background-color: rgb(35, 121, 70);
+}
+
+.buttons{
+    justify-content: center;
 }
