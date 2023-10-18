@@ -8,11 +8,15 @@ import Accordion from 'react-bootstrap/Accordion';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 
 export const Categories = () => {
     
     const [activeItem, setActiveItem] = useState(null);
+    //new
+    const [selectedInfo, setSelectedInfo] = useState({}); // Estado para almacenar la información seleccionada
+
     const [selectValues, setSelectValues] = useState({
       item1: { select1: '', select2: '', select3: '' },
       item2: { select1: '', select2: '', select3: '' },
@@ -31,15 +35,10 @@ export const Categories = () => {
       }));
     };
 
-    const handleAccordionSelect = (selectedItem) => {
-      setActiveItem(selectedItem);
-
-      setSelectValues({
-        item1: { select1: '', select2: '', select3: '' },
-        item2: { select1: '', select2: '', select3: '' },
-        item3: { select1: '', select2: '', select3: '' },
-        item4: { select1: '', select2: '', select3: '' },
-        item5: { select1: '', select2: '', select3: '' },
+    const handleSave = (item) => {
+      setSelectedInfo({
+        ...selectedInfo,
+        [item]: selectValues[item],
       });
     };
 
@@ -51,24 +50,70 @@ export const Categories = () => {
       return (
         <Card>
           <Card.Body>
-            <Card.Title>Valores Seleccionados</Card.Title>
+            <Card.Title>Dish Properties</Card.Title>
             {/*<Card.Title>{`Valores Seleccionados - ${item}`}</Card.Title>*/}
             <Card.Text>
-              <strong>Pizza Crust:</strong> {select1 || 'No seleccionado'}
+              <strong>Pizza Crust:</strong> {select1 || 'No selected'}
               <br />
-              <strong>State:</strong> {select2 || 'No seleccionado'}
+              <strong>State:</strong> {select2 || 'No selected'}
               <br />
-              <strong>Pizza Edge:</strong> {select3 || 'No seleccionado'}
+              <strong>Pizza Edge:</strong> {select3 || 'No selected'}
             </Card.Text>
           </Card.Body>
         </Card>
       );
     };
 
+    const handleAccordionSelect = (selectedItem) => {
+      setActiveItem(selectedItem);
+
+      setSelectValues({
+        item1: { select1: '', select2: '', select3: '' },
+        item2: { select1: '', select2: '', select3: '' },
+        item3: { select1: '', select2: '', select3: '' },
+        item4: { select1: '', select2: '', select3: '' },
+        item5: { select1: '', select2: '', select3: '' },
+      });
+            // Reiniciar la información del item anterior
+    if (activeItem) {
+      setSelectedInfo((prevSelectedInfo) => ({
+        ...prevSelectedInfo,
+        [activeItem]: {},
+      }));
+    }
+    setActiveItem(selectedItem);
+      
+      
+      
+    };
+
+          // Función para renderizar la tarjeta con los valores seleccionados
+        const renderSelectedValuesCard2 = () => {
+            const { select1, select2, select3 } = selectValues.item2;
+            
+      
+            return (
+              <Card>
+                <Card.Body>
+                  <Card.Title>Dish Properties</Card.Title>
+                  {/*<Card.Title>{`Valores Seleccionados - ${item}`}</Card.Title>*/}
+                  <Card.Text>
+                    <strong>Type of stew:</strong> {select1 || 'No selected'}
+                    <br />
+                    <strong>Size:</strong> {select2 || 'No selected'}
+                    <br />
+                    <strong>Material:</strong> {select3 || 'No selected'}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            );
+          };
+
 
   return (
     <>
-      <Accordion activeKey={activeItem}  onSelect={handleAccordionSelect}>
+      <Accordion activeKey={activeItem} onSelect= {handleAccordionSelect}>
+
             <Accordion.Item eventKey="item1" >
 
                 <Accordion.Header>-Pizza</Accordion.Header>
@@ -115,6 +160,8 @@ export const Categories = () => {
                     </Form.Select>
                   </Form.Group>
                   </Row>
+
+                  <Button onClick={() => handleSave('item1')} variant="primary">Save</Button>{' '}
                 </Form>
                   
                 </Accordion.Body>
@@ -166,7 +213,10 @@ export const Categories = () => {
                       <option value="Pan">Pan</option>
                    </Form.Select>
                   </Form.Group>
+
                   </Row>
+                  <Button onClick={() => handleSave('item2')} variant="primary">Save</Button>{' '}
+
                 </Form>
               </Accordion.Body>
             </Accordion.Item>
@@ -337,18 +387,43 @@ export const Categories = () => {
       </Accordion>
      <br></br> 
 
-     {renderSelectedValuesCard()}
+     <Card>
+        <Card.Body>
+          <Card.Title>Información Seleccionada</Card.Title>
+          {selectedInfo[activeItem] && Object.keys(selectedInfo).map((item) => (
+          <Card.Text>
+              <div key={item}>
+                <strong>{item}:</strong>
+                <br />
+                <strong>Pizza Crust:</strong> {selectedInfo[item].select1 || 'No selected'}
+                <br />
+                <strong>State:</strong> {selectedInfo[item].select2 || 'No selected'}
+                <br />
+                <strong>Pizza Edge:</strong> {selectedInfo[item].select3 || 'No selected'}
+                <br />
+              </div>
+          </Card.Text>
+                      ))}
+
+        </Card.Body>
+      </Card>
+
+     {/*{renderSelectedValuesCard()}*/}
+     {/*{renderSelectedValuesCard2()}*/}
 
      {/*{Object.keys(initialSelectValues).map((item) => renderSelectedValuesCard(item))}*/}
 
+     <div className="container">
 
-      <div className="container">
+{      /*
       <div className='box'> Number of variants - 50 </div><br></br>
-        <div className='box'> Dish Properties</div>
+      <div className='box'> Dish Properties</div>*/}
+
         <div className='buttons'>
           <br></br>
         <button className="opc"> Download </button>
         <Link to='/selection'><button className="opc">Selection</button></Link>
+
         </div>
 
     </div>
