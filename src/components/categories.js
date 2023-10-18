@@ -1,21 +1,360 @@
 import React from 'react'
 import './categories.css';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import { Link } from 'react-router-dom';
+import './Caracteristics.css';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import Accordion from 'react-bootstrap/Accordion';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 
 export const Categories = () => {
     
-  const [value, setValue] = useState([]);
-  const handleChange = (val) => setValue(val);
+    const [activeItem, setActiveItem] = useState(null);
+    const [selectValues, setSelectValues] = useState({
+      item1: { select1: '', select2: '', select3: '' },
+      item2: { select1: '', select2: '', select3: '' },
+      item3: { select1: '', select2: '', select3: '' },
+      item4: { select1: '', select2: '', select3: '' },
+      item5: { select1: '', select2: '', select3: '' },
+    });
+
+    const handleSelectChange = (item, select, value) => {
+      setSelectValues((prevValues) => ({
+        ...prevValues,
+        [item]: {
+          ...prevValues[item],
+          [select]: value,
+        },
+      }));
+    };
+
+    const handleAccordionSelect = (selectedItem) => {
+      setActiveItem(selectedItem);
+
+      setSelectValues({
+        item1: { select1: '', select2: '', select3: '' },
+        item2: { select1: '', select2: '', select3: '' },
+        item3: { select1: '', select2: '', select3: '' },
+        item4: { select1: '', select2: '', select3: '' },
+        item5: { select1: '', select2: '', select3: '' },
+      });
+    };
+
+      // Función para renderizar la tarjeta con los valores seleccionados
+    const renderSelectedValuesCard = () => {
+      const { select1, select2, select3 } = selectValues.item1;
+      
+
+      return (
+        <Card>
+          <Card.Body>
+            <Card.Title>Valores Seleccionados</Card.Title>
+            {/*<Card.Title>{`Valores Seleccionados - ${item}`}</Card.Title>*/}
+            <Card.Text>
+              <strong>Pizza Crust:</strong> {select1 || 'No seleccionado'}
+              <br />
+              <strong>State:</strong> {select2 || 'No seleccionado'}
+              <br />
+              <strong>Pizza Edge:</strong> {select3 || 'No seleccionado'}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    };
+
 
   return (
     <>
+      <Accordion activeKey={activeItem}  onSelect={handleAccordionSelect}>
+            <Accordion.Item eventKey="item1" >
+
+                <Accordion.Header>-Pizza</Accordion.Header>
+                <Accordion.Body>
+                <Form >
+                  <Row className="mb-3">
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Pizza Crust</Form.Label>
+                      <Form.Select
+                        value={selectValues.item1.select1}
+                        onChange={(e) => handleSelectChange('item1', 'select1', e.target.value)}
+                      >
+                        <option value="">Choose</option>
+                        <option value="Thin">Thin</option>
+                        <option value="Thik">Thik</option>
+                        <option value="Deep Dish">Deep Dish</option>
+                      </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>State</Form.Label>
+                    <Form.Select
+                        value={selectValues.item1.select2}
+                        onChange={(e) => handleSelectChange('item1', 'select2', e.target.value)}
+                      >
+                      <option value="">Choose...</option>
+                      <option value="Frozen">Frozen</option>
+                      <option value="Fresh">Fresh</option>
+                      <option value="Reheat">Reheat</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Pizza edge</Form.Label>
+                    <Form.Select
+                        value={selectValues.item1.select3}
+                        onChange={(e) => handleSelectChange('item1', 'select3', e.target.value)}
+                      >
+                      <option value=" ">Choose...</option>
+                      <option value="Regular ">Regular</option>
+                      <option value="Self-rising ">Self-rising</option>
+                      <option value="Stuffed crust ">Stuffed crust</option>
+                      <option value="Pre-backed">Pre-backed</option>
+                    </Form.Select>
+                  </Form.Group>
+                  </Row>
+                </Form>
+                  
+                </Accordion.Body>
+            </Accordion.Item >
+            <Accordion.Item eventKey="item2">
+              <Accordion.Header>-Casserole</Accordion.Header>
+              <Accordion.Body>
+              <Form>
+                  <Row className="mb-3">
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Type of stew</Form.Label>
+                      <Form.Select
+                        value={selectValues.item2.select1}
+                        onChange={(e) => handleSelectChange('item2', 'select1', e.target.value)}
+                      >
+                        <option value="Choose">Choose</option>
+                        <option value="Lasagna">Lasagna</option>
+                        <option value="Green bean">Green bean</option>
+                        <option value="Mac & cheese">Mac & cheese</option>
+                        <option value="Mashed potatoes">Mashed potatoes</option>
+                      </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Size</Form.Label>
+                    <Form.Select
+                        value={selectValues.item2.select2}
+                        onChange={(e) => handleSelectChange('item2', 'select2', e.target.value)}
+                      >
+                      <option value="">Choose...</option>
+                      <option value="8x8">8x8</option>
+                      <option value="8x12 (2qt)">8x12 (2qt)</option>
+                      <option value="9x13 (3 qt)">9x13 (3 qt)</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Material</Form.Label>
+                    <Form.Select
+                        value={selectValues.item2.select3}
+                        onChange={(e) => handleSelectChange('item2', 'select3', e.target.value)}
+                      >
+                      <option value="">Choose...</option>
+                      <option value="Glass">Glass</option>
+                      <option value="Metal">Metal</option>
+                      <option value="Foil">Foil</option>
+                      <option value="Steel">Steel</option>
+                      <option value="Pizza Stone">Pizza Stone</option>
+                      <option value="Pan">Pan</option>
+                   </Form.Select>
+                  </Form.Group>
+                  </Row>
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="item3" >
+              <Accordion.Header>-Poultry</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                    <Row className="mb-3">
+                      <Form.Group as={Col} controlId="">
+                        <Form.Label>Meat</Form.Label>
+                        <Form.Select
+                        value={selectValues.item3.select1}
+                        onChange={(e) => handleSelectChange('item3', 'select1', e.target.value)}
+                        >
+                          <option value="">Choose</option>
+                          <option value="Chicken">Chicken</option>
+                          <option value="Turkey">Turkey</option>
+                          <option value="Duck">Duck</option>
+                          <option value="Quail">Quail</option>
+                        </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>...</Form.Label>
+                      <Form.Select
+                        value={selectValues.item3.select2}
+                        onChange={(e) => handleSelectChange('item3', 'select2', e.target.value)}
+                        >
+                        <option value="">Choose...</option>
+                        <option value="Whole">Whole</option>
+                        <option value="Quarters">Quarters</option>
+                        <option value="White">White</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Mixed">Mixed</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Stuffed</Form.Label>
+                      <Form.Select
+                        value={selectValues.item3.select3}
+                        onChange={(e) => handleSelectChange('item3', 'select3', e.target.value)}
+                        >
+                        <option value="">Choose...</option>
+                        <option value="Unstuffed">Unstuffed</option>
+                        <option value="Stuffed">Stuffed</option>
+                      </Form.Select>
+                    </Form.Group>
+                    </Row>
+                  </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="item4">
+              <Accordion.Header>-Vegetables</Accordion.Header>
+              <Accordion.Body>
+              <Form>
+                    <Row className="mb-3">
+                      <Form.Group as={Row} className="mb-2" controlId="">
+                        <Form.Label>Vegetables</Form.Label>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Carrots" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Potatoes" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Brussels sprouts" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Zucchini" />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-2" controlId="formCrust">
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Carrots" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Potatoes" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Brussels sprouts" />
+                        </Col>
+                        <Col sm={{ span: 10, offset: 2 }}>
+                          <Form.Check label="Zucchini" />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Category</Form.Label>
+                      <Form.Select
+                        value={selectValues.item4.select2}
+                        onChange={(e) => handleSelectChange('item2', 'select1', e.target.value)}
+                      >
+                        <option value="">Choose...</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Crispy">Crispy</option>
+                        <option value="Extra Crispy">Extra Crispy</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Container</Form.Label>
+                      <Form.Select
+                        value={selectValues.item4.select3}
+                        onChange={(e) => handleSelectChange('item2', 'select1', e.target.value)}
+                      >
+                        <option value="">Choose...</option>
+                        <option value="Metal">Metal</option>
+                        <option value="Glass">Glass</option>
+                        <option value="Foil">Foil</option>
+                        <option value="Mesh">Mesh</option>
+                      </Form.Select>
+                    </Form.Group>
+                    </Row>
+                  </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="item5">
+              <Accordion.Header>-Cookies</Accordion.Header>
+              <Accordion.Body>
+              <Form>
+                  <Row className="mb-3">
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Flavor</Form.Label>
+                      <Form.Select
+                        value={selectValues.item5.select1}
+                        onChange={(e) => handleSelectChange('item5', 'select1', e.target.value)}
+                      >
+                        <option value="">Choose</option>
+                        <option value="Chocolate chip">Chocolate chip</option>
+                        <option value="Peanut butter">Peanut butter</option>
+                        <option value="Sugar cookies">Sugar cookies</option>
+                        <option value="Gingerbread">Gingerbread</option>
+                      </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Size</Form.Label>
+                    <Form.Select
+                        value={selectValues.item5.select2}
+                        onChange={(e) => handleSelectChange('item5', 'select2', e.target.value)}
+                      >
+                      <option value="">Choose...</option>
+                      <option value="Regular">Regular</option>
+                      <option value="Chunky">Chunky</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Texture</Form.Label>
+                    <Form.Select
+                        value={selectValues.item5.select3}
+                        onChange={(e) => handleSelectChange('item5', 'select3', e.target.value)}
+                      >
+                      <option value="">Choose...</option>
+                      <option value="Frozen">Frozen</option>
+                      <option value="Refrigerated">Refrigerated</option>
+                      <option value="Fresh">Fresh</option>
+
+                   </Form.Select>
+                  </Form.Group>
+                  </Row>
+                </Form>
+
+              </Accordion.Body>
+            </Accordion.Item>
+         
+      </Accordion>
+     <br></br> 
+
+     {renderSelectedValuesCard()}
+
+     {/*{Object.keys(initialSelectValues).map((item) => renderSelectedValuesCard(item))}*/}
+
+
+      <div className="container">
+      <div className='box'> Number of variants - 50 </div><br></br>
+        <div className='box'> Dish Properties</div>
+        <div className='buttons'>
+          <br></br>
+        <button className="opc"> Download </button>
+        <Link to='/selection'><button className="opc">Selection</button></Link>
+        </div>
+
+    </div>
+
+
+{      /*
       <ButtonGroup vertical>
         <DropdownButton
           as={ButtonGroup}
@@ -28,7 +367,7 @@ export const Categories = () => {
           <Dropdown.Item eventKey="1" >
             Thickness <br></br>
             <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-              <ToggleButton id="tbg-check-1" value={1}>
+              <ToggleButton variant="outline-secondary" id="tbg-check-1" value={1}>
                 Thin
               </ToggleButton>
               <ToggleButton id="tbg-check-2" value={2}>
@@ -201,181 +540,10 @@ export const Categories = () => {
 
         </DropdownButton>
 
-        <DropdownButton
-          as={ButtonGroup}
-          title="-Casserole"
-          id="bg-vertical-dropdown-4"
-          size="lg"
-          variant='secondary'
-          autoClose={false}
-        >
-          Vegetables  <br></br>
-          <Form>
-            {['checkbox'].map((type) => (
-              <div key={`reverse-${type}`} className="mb-3">
-                <Form.Check
-                  reverse
-                  label="Carrots"
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-1`}
-                />
-                <Form.Check
-                  reverse
-                  label="Potatoes"
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-2`}
-                />
-                <Form.Check
-                  reverse
-                  label="Brussels"
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-3`}
-                />
-                <Form.Check
-                  reverse
-                  label="Sprouts"
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-4`}
-                />
-                 <Form.Check
-                  reverse
-                  label="Zucchini"
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-5`}
-                />
-                 <Form.Check
-                  reverse
-                  label="Egg plant "
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-6`}
-                />
-                 <Form.Check
-                  reverse
-                  label="Coliflower "
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-7`}
-                />
-                  <Form.Check
-                  reverse
-                  label="Peppers "
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-8`}
-                />
-                 <Form.Check
-                  reverse
-                  label="Tomatoes "
-                  name="group1"
-                  type={type}
-                  id={`reverse-${type}-9`}
-                />
-
-              </div>
-            ))}
-          </Form>
-                
-          
-          <Dropdown.Item eventKey="2">
-            <br></br>
-
-              <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-                <ToggleButton id="tbg-check-1" value={1}>
-                Medium
-                </ToggleButton>
-                <ToggleButton id="tbg-check-2" value={2}>
-                Crispy 
-                </ToggleButton>
-                <ToggleButton id="tbg-check-3" value={3}>
-                Extra Crispy
-                </ToggleButton>
-              </ToggleButtonGroup>
-          </Dropdown.Item>
-          
-          <Dropdown.Item eventKey="3">
-          Material  <br></br>
-
-              <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-                <ToggleButton id="tbg-check-1" value={1}>
-                 Metal
-                </ToggleButton>
-                <ToggleButton id="tbg-check-2" value={2}>
-                Glass 
-                </ToggleButton>
-                <ToggleButton id="tbg-check-3" value={3}>
-                Foil 
-                </ToggleButton>
-                <ToggleButton id="tbg-check-4" value={4}>
-                Mesh 
-                </ToggleButton>
-              </ToggleButtonGroup>
-          </Dropdown.Item>
-          
-        </DropdownButton>
-
-        <DropdownButton
-          as={ButtonGroup}
-          id="bg-vertical-dropdown-5"
-          size="lg"
-          variant='secondary'
-          title="-Cookies"
-          autoClose={false}
-        >
-        <Dropdown.Item eventKey="1">
-          Flavors  <br></br>
-
-              <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-                <ToggleButton id="tbg-check-1" value={1}>
-                Chocolate chip
-                </ToggleButton>
-                <ToggleButton id="tbg-check-2" value={2}>
-                Peanut butter 
-                </ToggleButton>
-                <ToggleButton id="tbg-check-3" value={3}>
-                Sugar cookies
-                </ToggleButton>
-                <ToggleButton id="tbg-check-4" value={4}>
-                Gingerbread 
-                </ToggleButton>
-              </ToggleButtonGroup>
-          </Dropdown.Item>
-
-          <Dropdown.Item eventKey="2">
-            <br></br>
-
-              <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-                <ToggleButton id="tbg-check-1" value={1}>
-                Regular
-                </ToggleButton>
-                <ToggleButton id="tbg-check-2" value={2}>
-                Chunky
-                </ToggleButton> 
-              </ToggleButtonGroup>
-          </Dropdown.Item>
-
-          <Dropdown.Item eventKey="3">
-            State:<br></br>
-
-              <ToggleButtonGroup type="checkbox" value={value} onChange={handleChange} className="mb-2">
-                <ToggleButton id="tbg-check-1" value={1}>
-                Frozen
-                </ToggleButton>
-                <ToggleButton id="tbg-check-2" value={2}>
-                Refrigerated
-                </ToggleButton> 
-                <ToggleButton id="tbg-check-3" value={3}>
-                Fresh
-                </ToggleButton> 
-              </ToggleButtonGroup>
-          </Dropdown.Item>
-        </DropdownButton>
+       
      </ButtonGroup>
+   */}
+     
    
     
     </>
