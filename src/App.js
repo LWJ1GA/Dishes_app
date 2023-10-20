@@ -1,10 +1,10 @@
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Categories } from './components/categories';
 import { Caracteristics } from './components/Caracteristics';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Selection } from './components/Selection';
+import {Dish } from './components/Dish';
 
 
 function App() {
@@ -19,7 +19,8 @@ function App() {
         {/* <Caracteristics></Caracteristics> */}
         <Switch>
           <Route exact path="/">
-            <Categories />
+            {/*<Categories />*/}
+            <Dish/>
            {/* <Caracteristics/>*/}
           </Route>
           <Route exact path="/selection">
